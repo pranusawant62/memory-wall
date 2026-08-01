@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My People</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --kraft:#E7D9BE;
+    --kraft-dark:#D8C6A2;
+    --ink:#3B2C1F;
+    --ink-soft:#6B5A47;
+    --terracotta:#C1623A;
+    --sage:#7C8F6A;
+    --cream:#FBF5E9;
+    --pin-red:#B23A32;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:
+      radial-gradient(ellipse at top left, rgba(255,255,255,0.06), transparent 50%),
+      var(--kraft);
+    background-image:
+      radial-gradient(rgba(0,0,0,0.035) 1px, transparent 1px),
+      var(--kraft);
+    background-size:3px 3px;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+  }
+  section{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:80px 24px;
+    position:relative;
+  }
+  .reveal{
+    opacity:0; transform:translateY(28px);
+    transition:opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  /* ---------- HERO ---------- */
+  .hero{ text-align:center; }
+  .hero .eyebrow{
+    font-family:'Inter',sans-serif; font-size:12px; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--terracotta); font-weight:600;
+  }
+  .pin{
+    width:14px;height:14px;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #E9776A, var(--pin-red));
+    box-shadow:0 3px 5px rgba(0,0,0,0.35);
+    margin:0 auto 14px;
+  }
+  .hero h1{
+    font-family:'Caveat',cursive;
+    font-weight:700;
+    font-size:clamp(52px,10vw,84px);
+    line-height:0.95;
+    color:var(--ink);
+    margin-top:8px;
+    transform:rotate(-1.5deg);
+  }
+  .hero p{
+    font-family:'Fraunces',serif;
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:420px;
+    margin:18px auto 0;
+    font-style:italic;
+  }
+  .scroll-cue{
+    margin-top:56px; font-size:12px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--ink-soft); display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scroll-cue svg{ animation:bob 1.8s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+
+  /* ---------- CORKBOARD / MEMORY WALL ---------- */
+  .board-title{ text-align:center; margin-bottom:48px; }
+  .board-title .eyebrow{
+    font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sage); font-weight:600;
+  }
+  .board-title h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(28px,5vw,40px);
+    margin-top:6px;
+  }
+  .cork-grid{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:28px 20px;
+    max-width:900px;
+  }
+  .polaroid{
+    background:var(--cream);
+    padding:14px 14px 46px;
+    box-shadow:0 10px 24px rgba(59,44,31,0.22), 0 2px 4px rgba(59,44,31,0.12);
+    width:200px;
+    position:relative;
+  }
+  .polaroid:nth-child(1){ transform:rotate(-6deg); }
+  .polaroid:nth-child(2){ transform:rotate(4deg); margin-top:30px; }
+  .polaroid:nth-child(3){ transform:rotate(-3deg); }
+  .polaroid:nth-child(4){ transform:rotate(6deg); margin-top:14px; }
+  .polaroid:hover{ transform:rotate(0deg) scale(1.04); transition:transform 0.3s ease; z-index:2; }
+  .polaroid .tape{
+    position:absolute; top:-12px; left:50%; transform:translateX(-50%) rotate(-3deg);
+    width:60px; height:22px;
+    background:rgba(230,220,190,0.75);
+    border:1px solid rgba(0,0,0,0.05);
+    box-shadow:0 2px 3px rgba(0,0,0,0.1);
+  }
+  .photo-slot{
+    width:100%; aspect-ratio:1/1;
+    background:linear-gradient(135deg,#D8C6A2,#C7B48C);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft); font-size:11px; text-align:center; padding:10px;
+    font-family:'Inter',sans-serif;
+  }
+  .polaroid .cap{
+    font-family:'Caveat',cursive; font-weight:700; font-size:19px;
+    text-align:center; margin-top:12px; color:var(--ink);
+  }
+
+  /* ---------- WHY YOU MATTER — sticky notes ---------- */
+  .notes-wrap{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:22px; max-width:820px;
+  }
+  .sticky{
+    width:190px; min-height:150px;
+    padding:20px 18px;
+    font-family:'Caveat',cursive; font-size:20px; line-height:1.25;
+    color:var(--ink);
+    box-shadow:0 8px 16px rgba(59,44,31,0.18);
+    position:relative;
+  }
+  .sticky:nth-child(1){ background:#F0DFA8; transform:rotate(-4deg); }
+  .sticky:nth-child(2){ background:#E3C7C0; transform:rotate(3deg); margin-top:18px;}
+  .sticky:nth-child(3){ background:#C9D6BC; transform:rotate(-2deg); }
+ 
+  .sticky .num{
+    position:absolute; bottom:10px; right:14px; font-family:'Inter',sans-serif;
+    font-size:11px; color:var(--ink-soft); letter-spacing:0.05em;
+  }
+
+  /* ---------- LETTER ---------- */
+  .letter{
+    background:var(--cream);
+    max-width:480px; width:100%;
+    padding:44px 38px;
+    box-shadow:0 16px 40px rgba(59,44,31,0.25);
+    position:relative;
+    transform:rotate(-0.6deg);
+  }
+  .letter::before{
+    content:''; position:absolute; top:-10px; left:24px; width:70px; height:24px;
+    background:rgba(230,220,190,0.7); transform:rotate(-4deg);
+  }
+  .letter .eyebrow{
+    font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:var(--terracotta); font-weight:600;
+  }
+  .letter h3{
+    font-family:'Fraunces',serif; font-weight:600; font-size:26px; margin:8px 0 20px;
+  }
+  .letter p{
+    font-family:'Caveat',cursive; font-size:22px; line-height:1.5; color:var(--ink);
+  }
+  .letter .sign{ margin-top:20px; text-align:right; font-size:22px; color:var(--terracotta); }
+
+  /* ---------- SHARE CTA ---------- */
+  .cta{ text-align:center; }
+  .cta h2{
+    font-family:'Fraunces',serif; font-weight:600; font-size:clamp(26px,5vw,36px); max-width:480px; margin:0 auto;
+  }
+  .cta p{ color:var(--ink-soft); margin-top:12px; max-width:400px; margin-left:auto; margin-right:auto; }
+  .btn{
+    margin-top:28px;
+    display:inline-flex; align-items:center; gap:10px;
+    background:var(--terracotta); color:var(--cream);
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    padding:15px 30px; border-radius:100px; border:none; cursor:pointer;
+    box-shadow:0 10px 24px rgba(193,98,58,0.35);
+    transition:transform 0.2s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+  .footer-mark{
+    margin-top:60px; font-family:'Caveat',cursive; font-size:16px; color:var(--ink-soft);
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ transition:none; }
+    .scroll-cue svg{ animation:none; }
+  }
+</style>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="hero">
+  <div class="pin"></div>
+  <div class="eyebrow reveal in">a little something for you</div>
+  <h1>For my people</h1>
+  <p>A scrapbook of the moments, the inside jokes, and the reasons I'm glad we found each other.</p>
+  <div class="scroll-cue">
+    keep scrolling
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 4V20M12 20L6 14M12 20L18 14" stroke="#6B5A47" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+</section>
+
+<section>
+  <div class="board-title reveal">
+    <div class="eyebrow">the memory wall</div>
+    <h2>Moments worth pinning up</h2>
+  </div>
+  <div class="cork-grid reveal">
+    <div class="polaroid"><div class="tape"></div>
+      <div class="photo-slot"><img src="college.jpeg"></div>
+      <div class="cap">that one Trip pic</div>
+    </div>
+    <div class="polaroid"><div class="tape"></div>
+      <div class="photo-slot"><img src="same outfit.jpeg"></div>
+      <div class="cap"> same outfit pic</div>
+    </div>
+    <div class="polaroid"><div class="tape"></div>
+      <div class="photo-slot"><img src="festival.jpeg"></div>
+      <div class="cap">college pic</div>
+    </div>
+    <div class="polaroid"><div class="tape"></div>
+      <div class="photo-slot"><img src="moment.jpeg">"</div>
+      <div class="cap">moments</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="board-title reveal">
+    <div class="eyebrow">why you</div>
+    <h2>A few reasons, off the top of my head</h2>
+  </div>
+  <div class="notes-wrap reveal">
+    <div class="sticky">You all are my good friend and my laughter💖😊<div class="num">01</div></div>
+    <div class="sticky">Thankful for the friendships that make life beautiful.🌼💕<div class="num">02</div></div>
+    <div class="sticky">Happy Friendship Day! Grateful for good friends and great memories.💗<div class="num">03</div></div>
+
+  </div>
+</section>
+
+<section>
+  <div class="letter reveal">
+    <div class="eyebrow">from the heart</div>
+    <h3>A quick letter</h3>
+    <p>Dear friend 💗— Happy Friendship Day! 🌸
+Thank you for being a part of my journey. Here's to many more beautiful memories together! ✨.</p>
+    <div class="sign">— always, me</div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="reveal">
+    <h2>Made this for someone who deserves it.</h2>
+    <p>Swap in your own photos and words, then send it their way.</p>
+    <button class="btn" onclick="navigator.clipboard && navigator.clipboard.writeText(window.location.href); this.textContent='Link copied ✓'">
+      Share with a friend →
+    </button>
+    <div class="footer-mark">made with love, for the people who matter</div>
+  </div>
+</section>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); } });
+  }, {threshold:0.2});
+  els.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
